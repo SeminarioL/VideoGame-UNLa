@@ -1,0 +1,42 @@
+import pygame, sys
+from pygame.locals import *
+
+#Constantes para la pantalla
+PANTALLA_ANCHO = 640
+PANTALLA_ALTO  = 480
+
+pygame.init()
+#Definimos las dimensiones y el nombre de la ventana
+pantalla = pygame.display.set_mode((PANTALLA_ANCHO,PANTALLA_ALTO))
+pygame.display.set_caption("Cronometro")
+
+#Fuentes
+fuente_01 = pygame.font.SysFont("Arial",30,True,False)
+fuente_02 = pygame.font.SysFont("Arial",25,False,False)
+
+#Mesaje
+#Con render lo "convertimos" en imagen
+msj_tiempo = fuente_01.render("TIME ",0,(248,55,11))
+
+#Creamos reloj
+reloj = pygame.time.Clock()
+
+#Color de la pantalla
+color_pantalla = pygame.Color(64,64,64)
+
+#Bucle Principal del juego
+while True:
+	#Para que el color se muestre en pantalla
+	pantalla.fill (color_pantalla)
+	#Para mostrar el mensaje del cronometro
+	pantalla.blit(msj_tiempo,(10,10))
+	#Tomamos el tiempo en segundos con las opciones que ofrece pygame
+	segundos = pygame.time.get_ticks()/1000 #Se divide por 1000
+	segundos = str(segundos)
+	#Convertimos el tiempo en "imagen"
+	cronometro = fuente_02.render(segundos,0,(255,255,255))
+	pantalla.blit(cronometro,(10,50))
+	for eventos in pygame.event.get():
+		if eventos.type == pygame.QUIT:
+			sys.exit(0)
+	pygame.display.update()
